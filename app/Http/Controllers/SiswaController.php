@@ -34,7 +34,15 @@ class SiswaController extends Controller
 
         $request->request->add(['user_id'=>$user->id]);
 
-        Siswa::create($request->all());
+        $siswa = Siswa::create($request->all());
+        if($request->hasFile('avatar')){
+            $randomName = Str::random(10);
+            $avatar = $request->file('avatar');
+            $fileName = $randomName.'.'.$avatar->getClientOriginalExtension();
+            $avatar->move('assets/profile/',$fileName);
+            $siswa->avatar = $fileName;
+            $siswa->save();
+        }
         return redirect()->route('siswa.index')->with('success','Data Berhasil Masuk');
     }
 

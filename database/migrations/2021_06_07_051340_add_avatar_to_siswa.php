@@ -14,7 +14,7 @@ class AddAvatarToSiswa extends Migration
     public function up()
     {
         Schema::table('siswa', function (Blueprint $table) {
-            $table->string('avatar',20)->nullable();
+            $table->string('avatar',255)->nullable();
         });
     }
 

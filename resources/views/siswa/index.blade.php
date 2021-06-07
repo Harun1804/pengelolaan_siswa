@@ -67,7 +67,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('siswa.store') }}">
+                <form method="POST" action="{{ route('siswa.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="nama_depan" class="form-label">Nama Depan</label>
@@ -135,6 +135,18 @@
                         <label for="alamat" class="form-label">Alamat</label>
                         <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" rows="3" name="alamat">{{ old('alamat') }}</textarea>
                         @error('alamat')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Avatar</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input @error('avatar') is-invalid @enderror" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="avatar" accept="image/*">
+                        </div>
+                        @error('avatar')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
