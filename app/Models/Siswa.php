@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Mapel;
 
 class Siswa extends Model
 {
@@ -29,5 +30,10 @@ class Siswa extends Model
             return asset('assets/profile/default.png');
         }
         return asset('assets/profile/'.$this->avatar);
+    }
+
+    public function mapel()
+    {
+        return $this->belongsToMany(Mapel::class)->withPivot(['nilai']);
     }
 }
