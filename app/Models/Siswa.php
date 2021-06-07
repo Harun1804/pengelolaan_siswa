@@ -21,7 +21,7 @@ class Siswa extends Model
      *
      * @var array
      */
-    protected $fillable = ['nama_depan','nama_belakang','jenis_kelamin','agama','alamat','avatar'];
+    protected $fillable = ['nama_depan','nama_belakang','jenis_kelamin','agama','alamat','avatar','user_id'];
 
     public function getAvatar()
     {

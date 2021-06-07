@@ -26,9 +26,11 @@ class SiswaRequest extends FormRequest
         return [
             'nama_depan' => 'required|string',
             'nama_belakang' => 'required|string',
+            'email' => 'required|string|email',
             'jenis_kelamin' => 'required|in:laki-laki,perempuan',
             'agama' => 'required|in:islam,kristen,katolik,hindu,budha',
-            'alamat' => 'string'
+            'alamat' => 'string',
+            'avatar' => 'image|mimes:png,jpg,jpeg|max:2048'
         ];
     }
 }

@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use App\Http\Requests\SiswaRequest;
-
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class SiswaController extends Controller
 {
@@ -23,7 +24,17 @@ class SiswaController extends Controller
 
     public function store(SiswaRequest $request)
     {
-        Siswa::create($request->validated());
+        $user = new User();
+        $user->name = $request->nama_depan;
+        $user->email = $request->email;
+        $user->password = Hash::make('rahasia');
+        $user->remember_token = Str::random(60);
+        $user->role = 'siswa';
+        $user->save();
+
+        $request->request->add(['user_id'=>$user->id]);
+
+        Siswa::create($request->all());
         return redirect()->route('siswa.index')->with('success','Data Berhasil Masuk');
     }
 

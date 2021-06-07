@@ -29,6 +29,16 @@
             </div>
 
             <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control @error('email')
+            is-invalid
+        @enderror" id="email" name="email" value="{{ old('email') }}">
+                @error('email')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
                 <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                 <br>
                 <label class="fancy-radio">
@@ -79,8 +89,11 @@
                     <span class="input-group-text" id="inputGroupFileAddon01">Avatar</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="avatar" accept="image/*">
+                    <input type="file" class="custom-file-input @error('avatar') is-invalid @enderror" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="avatar" accept="image/*">
                 </div>
+                @error('avatar')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <br>

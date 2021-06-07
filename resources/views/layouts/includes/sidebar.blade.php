@@ -4,7 +4,9 @@
 		<nav>
 			<ul class="nav">
 				<li><a href="{{ route('dashboard') }}" class="{{ (request()->segment(1) === 'dashboard') ? 'active' : null }}"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-				<li><a href="{{ route('siswa.index') }}" class="{{ (request()->segment(1) === 'siswa') ? 'active' : null }}"><i class="lnr lnr-user"></i> <span>Siswa</span></a></li>
+				@if (auth()->user()->role == 'admin')
+					<li><a href="{{ route('siswa.index') }}" class="{{ (request()->segment(1) === 'siswa') ? 'active' : null }}"><i class="lnr lnr-user"></i> <span>Siswa</span></a></li>
+				@endif
 				
 				{{-- <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li>
 				<li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li>

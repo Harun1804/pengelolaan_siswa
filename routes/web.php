@@ -28,7 +28,7 @@ Route::prefix('authenticate')->name('auth.')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
-    Route::prefix('siswa')->name('siswa.')->group(function () {
+    Route::prefix('siswa')->name('siswa.')->middleware('checkRole:admin')->group(function () {
         Route::get('/index', [SiswaController::class,'index'])->name('index');
         Route::post('/store',[SiswaController::class,'store'])->name('store');
         Route::get('/edit/{siswa}',[SiswaController::class,'edit'])->name('edit');
