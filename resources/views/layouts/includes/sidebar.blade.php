@@ -4,7 +4,7 @@
 		<nav>
 			<ul class="nav">
 				<li><a href="#" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-				<li><a href="{{ route('siswa.index') }}" class="active"><i class="lnr lnr-code"></i> <span>Siswa</span></a></li>
+				<li><a href="{{ route('siswa.index') }}" class="active"><i class="lnr lnr-user"></i> <span>Siswa</span></a></li>
 				
 				{{-- <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li>
 				<li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li>
