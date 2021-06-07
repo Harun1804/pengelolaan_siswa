@@ -8,48 +8,52 @@
     {{ session("success") }}
 </div>
 @endif
-<div class="row">
-    <div class="col-6">
-        <h1>Data Siswa</h1>
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">Data Siswa</h3>
+        <div class="right">
+            <button type="button" class="btn" data-toggle="modal"
+            data-target="#siswaModal"><i class="lnr lnr-plus-circle"></i></button>
+        </div>
     </div>
-    <div class="col-6">
-        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-            data-bs-target="#siswaModal">Tambah Data</button>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>NAMA DEPAN</th>
+                    <th>NAMA BELAKANG</th>
+                    <th>JENIS KELAMIN</th>
+                    <th>AGAMA</th>
+                    <th>ALAMAT</th>
+                    <th colspan="2" style="text-align:center">AKSI</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($siswa as $s)
+                <tr>
+                    <td>{{ $s->nama_depan }}</td>
+                    <td>{{ $s->nama_belakang }}</td>
+                    <td>{{ $s->jenis_kelamin }}</td>
+                    <td>{{ $s->agama }}</td>
+                    <td>{{ $s->alamat }}</td>
+                    <td>
+                        <a href="{{ route('siswa.edit',$s->id) }}" class="btn btn-warning text-white btn-sm float-right">UBAH</a>
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ route('siswa.delete',$s->id) }}" class="d-inline">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger text-white btn-sm" onclick="return confirm('Yakin ?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>NAMA DEPAN</th>
-            <th>NAMA BELAKANG</th>
-            <th>JENIS KELAMIN</th>
-            <th>AGAMA</th>
-            <th>ALAMAT</th>
-            <th>AKSI</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($siswa as $s)
-        <tr>
-            <td>{{ $s->nama_depan }}</td>
-            <td>{{ $s->nama_belakang }}</td>
-            <td>{{ $s->jenis_kelamin }}</td>
-            <td>{{ $s->agama }}</td>
-            <td>{{ $s->alamat }}</td>
-            <td>
-                <a href="{{ route('siswa.edit',$s->id) }}" class="btn btn-warning text-white d-inline btn-sm">UBAH</a>
-                <form method="POST" action="{{ route('siswa.delete',$s->id) }}" class="d-inline">
-                    @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn-danger text-white btn-sm" onclick="return confirm('Yakin ?')">Delete</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-</div>
 @endsection
 
 @section('modal')
@@ -58,7 +62,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="siswaModalLabel">Masukan Data Siswa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{ route('siswa.store') }}">
@@ -66,8 +72,8 @@
                     <div class="mb-3">
                         <label for="nama_depan" class="form-label">Nama Depan</label>
                         <input type="text" class="form-control @error('nama_depan')
-                            is-invalid
-                        @enderror" id="nama_depan" name="nama_depan" value="{{ old('nama_depan') }}">
+                        is-invalid
+                    @enderror" id="nama_depan" name="nama_depan" value="{{ old('nama_depan') }}">
                         @error('nama_depan')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -76,32 +82,25 @@
                     <div class="mb-3">
                         <label for="nama_belakang" class="form-label">Nama Belakang</label>
                         <input type="text" class="form-control @error('nama_belakang')
-                        is-invalid
-                    @enderror" id="nama_belakang" name="nama_belakang" value="{{ old('nama_belakang') }}">
+                    is-invalid
+                @enderror" id="nama_belakang" name="nama_belakang" value="{{ old('nama_belakang') }}">
                         @error('nama_belakang')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                        <label for="jenis_kelamin">Jenis Kelamin</label>
                         <br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input @error('jenis_kelamin')
-                            is-invalid
-                        @enderror" type="radio" name="jenis_kelamin" id="laki-laki" value="laki-laki">
-                            <label class="form-check-label" for="laki-laki">
-                                Laki - laki
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input @error('jenis_kelamin')
-                            is-invalid
-                        @enderror" type="radio" name="jenis_kelamin" id="perempuan" value="perempuan">
-                            <label class="form-check-label" for="perempuan">
-                                Perempuan
-                            </label>
-                        </div>
+                        <label class="fancy-radio">
+                            <input name="jenis_kelamin" value="laki-laki" type="radio" class="d-inline @error('jenis_kelamin') is-invalid @enderror" @if(old('jenis_kelamin') == 'laki-laki') checked @endif>
+                            <span><i></i>Laki - Laki</span>
+                        </label>
+                        <label class="fancy-radio">
+                            <input name="jenis_kelamin" value="perempuan" type="radio" class="d-inline @error('jenis_kelamin') is-invalid @enderror" @if(old('jenis_kelamin') == 'perempuan') checked @endif>
+                            <span><i></i>Perempuan</span>
+                        </label>
+
                         @error('jenis_kelamin')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -109,15 +108,13 @@
 
                     <div class="mb-3">
                         <label for="agama">Agama</label>
-                        <select class="form-select my-3 @error('agama')
-                        is-invalid
-                    @enderror" name="agama" id="agama">
+                        <select class="form-control my-3 @error('agama') is-invalid @enderror" name="agama" id="agama">
                             <option selected>Pilih Agama</option>
-                            <option value="islam">Islam</option>
-                            <option value="kristen">Kristen</option>
-                            <option value="katolik">Katolik</option>
-                            <option value="hindu">Hindu</option>
-                            <option value="budha">Budha</option>
+                            <option value="islam" @if(old('agama') == 'islam') selected @endif>Islam</option>
+                            <option value="kristen" @if(old('agama') == 'kristen') selected @endif>Kristen</option>
+                            <option value="katolik" @if(old('agama') == 'katolik') selected @endif>Katolik</option>
+                            <option value="hindu" @if(old('agama') == 'hindu') selected @endif>Hindu</option>
+                            <option value="budha" @if(old('agama') == 'budha') selected @endif>Budha</option>
                         </select>
                         @error('agama')
                         <div class="alert alert-danger">{{ $message }}</div>
@@ -126,9 +123,7 @@
 
                     <div class="mb-3">
                         <label for="alamat" class="form-label">Alamat</label>
-                        <textarea class="form-control @error('alamat')
-                        is-invalid
-                    @enderror" id="alamat" rows="3" name="alamat">{{ old('alamat') }}</textarea>
+                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" rows="3" name="alamat">{{ old('alamat') }}</textarea>
                         @error('alamat')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -141,13 +136,13 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('custom-js')
-    @if (session('error'))
+    @if (session('errors'))
         <script>
-            let modal = document.getElementById('siswaModal');
-            modal.modal({show:true});
+            $('#siswaModal').modal({show:true})
         </script>
     @endif
 @endsection
