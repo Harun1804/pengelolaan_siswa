@@ -17,7 +17,7 @@ class CreateSiswaTable extends Migration
             $table->id();
             $table->string('nama_depan',30);
             $table->string('nama_belakang',30);
-            $table->enum('jenis_kelamin',['laki - laki','perempuan']);
+            $table->enum('jenis_kelamin',['laki-laki','perempuan']);
             $table->enum('agama',['islam','kristen','katolik','hindu','budha']);
             $table->text('alamat')->nullable();
             $table->timestamps();

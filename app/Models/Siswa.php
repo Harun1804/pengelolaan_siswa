@@ -15,4 +15,11 @@ class Siswa extends Model
      * @var string
      */
     protected $table = 'siswa';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['nama_depan','nama_belakang','jenis_kelamin','agama','alamat'];
 }
