@@ -45,6 +45,17 @@
         <!-- END LEFT COLUMN -->
         <!-- RIGHT COLUMN -->
         <div class="profile-right">
+            @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                <i class="fa fa-check-circle"></i> {{ session('success') }}
+            </div>
+            @endif
+            @if (session('danger'))
+            <div class="alert alert-danger" role="alert">
+                <i class="fa fa-times-circle"></i> {{ session('danger') }}
+            </div>
+            @endif
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nilaiModal">Tambah Nilai</button>
             <div class="panel">
                 <div class="panel-heading">
                     <h3 class="panel-title">Mata Pelajaran</h3>
@@ -80,4 +91,49 @@
         <!-- END RIGHT COLUMN -->
     </div>
 </div>
+@endsection
+
+@section('modal')
+<div class="modal fade" id="nilaiModal" tabindex="-1" aria-labelledby="nilaiModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nilaiModalLabel">Tambah Nilai</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('siswa.addNilai',$siswa->id) }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="mapel_id">Mata Pelajaran</label>
+                        <select class="form-control my-3 @error('mapel_id') is-invalid @enderror" name="mapel_id" id="mapel_id">
+                            <option selected>Pilih Mapel</option>
+                            @foreach ($matapelajaran as $mp)
+                                <option value="{{ $mp->id }}">{{ $mp->nama_mapel }}</option>
+                            @endforeach
+                        </select>
+                        @error('mapel_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nilai" class="form-label">Nilai</label>
+                        <input type="number" class="form-control @error('nilai')
+                            is-invalid
+                        @enderror" id="nilai" name="nilai" value="{{ old('nilai') }}" autocomplete="off">
+                        @error('nilai')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
 @endsection

@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{siswa}/update',[SiswaController::class,'update'])->name('update');
         Route::delete('/{siswa}/delete',[SiswaController::class,'delete'])->name('delete');
         Route::get('/{siswa}/profile',[SiswaController::class,'profile'])->name('profile');
+        Route::post('/{id}/add-nilai',[SiswaController::class,'addNilai'])->name('addNilai');
     });
     
 });
