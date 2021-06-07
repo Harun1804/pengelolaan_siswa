@@ -32,7 +32,7 @@
             <tbody>
                 @foreach ($siswa as $s)
                 <tr>
-                    <td>{{ $s->nama_depan }}</td>
+                    <td><a href="{{ route('siswa.profile',$s->id) }}">{{ $s->nama_depan }}</a></td>
                     <td>{{ $s->nama_belakang }}</td>
                     <td>{{ $s->jenis_kelamin }}</td>
                     <td>{{ $s->agama }}</td>

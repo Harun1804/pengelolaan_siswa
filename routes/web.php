@@ -27,13 +27,14 @@ Route::prefix('authenticate')->name('auth.')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
     Route::prefix('siswa')->name('siswa.')->group(function () {
-        Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
         Route::get('/index', [SiswaController::class,'index'])->name('index');
         Route::post('/store',[SiswaController::class,'store'])->name('store');
         Route::get('/edit/{siswa}',[SiswaController::class,'edit'])->name('edit');
         Route::put('/{siswa}/update',[SiswaController::class,'update'])->name('update');
         Route::delete('/{siswa}/delete',[SiswaController::class,'delete'])->name('delete');
+        Route::get('/{siswa}/profile',[SiswaController::class,'profile'])->name('profile');
     });
     
 });

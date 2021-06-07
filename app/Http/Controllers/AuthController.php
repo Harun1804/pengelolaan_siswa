@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function verifyLogin(Request $request)
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            return redirect()->route('siswa.dashboard');
+            return redirect()->route('dashboard');
         }
         return redirect()->route('auth.login')->with('danger','Gagal Login');
     }

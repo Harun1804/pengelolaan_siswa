@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use App\Http\Requests\SiswaRequest;
+
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class SiswaController extends Controller
@@ -34,6 +36,15 @@ class SiswaController extends Controller
     {
         $cariSiswa = Siswa::find($siswa->id);
         $cariSiswa->update($request->validated());
+        if($request->hasFile('avatar')){
+            $randomName = Str::random(10);
+            $avatar = $request->file('avatar');
+            $fileName = $randomName.'.'.$avatar->getClientOriginalExtension();
+            $avatar->move('assets/profile/',$fileName);
+            $cariSiswa->avatar = $fileName;
+            $cariSiswa->save();
+        }
+
         return redirect()->route('siswa.index')->with('success','Data Berhasil Diubah');
     }
 
@@ -41,5 +52,10 @@ class SiswaController extends Controller
     {
         Siswa::destroy($siswa->id);
         return redirect()->route('siswa.index')->with('success','Data Berhasil Dihapus');
+    }
+
+    public function profile(Siswa $siswa)
+    {
+        return view('siswa.profile',compact('siswa'));
     }
 }

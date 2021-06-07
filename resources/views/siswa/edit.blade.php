@@ -6,7 +6,7 @@
         <h3 class="panel-title">Edit Data Siswa</h3>
     </div>
     <div class="panel-body">
-        <form method="POST" action="{{ route('siswa.update',$siswa->id) }}">
+        <form method="POST" action="{{ route('siswa.update',$siswa->id) }}" enctype="multipart/form-data">
             @method('put')
             @csrf
             <div class="mb-3">
@@ -73,6 +73,16 @@
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Avatar</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="avatar" accept="image/*">
+                </div>
+            </div>
+
             <br>
             <button type="submit" class="btn btn-primary">Ubah Data</button>
         </form>

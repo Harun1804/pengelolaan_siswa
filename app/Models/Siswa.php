@@ -21,5 +21,13 @@ class Siswa extends Model
      *
      * @var array
      */
-    protected $fillable = ['nama_depan','nama_belakang','jenis_kelamin','agama','alamat'];
+    protected $fillable = ['nama_depan','nama_belakang','jenis_kelamin','agama','alamat','avatar'];
+
+    public function getAvatar()
+    {
+        if(!$this->avatar){
+            return asset('assets/profile/default.png');
+        }
+        return asset('assets/profile/'.$this->avatar);
+    }
 }
